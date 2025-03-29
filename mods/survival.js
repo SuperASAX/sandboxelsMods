@@ -203,6 +203,9 @@ elements.sell = {
         if (elementWorth[pixel.element] === -1) { return; }
         survivalAdd("gold_coin",elementWorth[pixel.element]||1);
     },
+    toolHoverStat: function(pixel) {
+        return "$"+(elementWorth[pixel.element]||1);
+    },
     category: "tools",
     desc: "Exchanges pixels for their market value in Gold Coins"
 }
@@ -413,8 +416,8 @@ runAfterLoad(function(){
                     return;
                 }
                 createPixel(currentElement,x,y);
-                if (elements[currentElement].customColor || elements[currentElement].singleColor) {
-                    pixelMap[x][y].color = pixelColorPick(currentElement,currentColor);
+                if (pixelMap[x][y] && currentElement === pixelMap[x][y].element && (elements[currentElement].customColor || elements[currentElement].singleColor)) {
+                    pixelMap[x][y].color = pixelColorPick(pixelMap[x][y],currentColorMap[currentElement]);
                 }
                 if (elements[currentElement].category !== "tools") { survivalRemove(currentElement,1); }
             }
